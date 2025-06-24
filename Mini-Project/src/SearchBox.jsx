@@ -6,14 +6,16 @@ import { useState } from 'react';
 
 
 
-export default function SearchBox(){
+export default function SearchBox({updateInfo}){
     let [city,setCity]=useState(""); 
+    let [error,setError]=useState(false);
 
 
     const API_URL="https://api.openweathermap.org/data/2.5/weather";
-    let API_KEY="d53cb23ad7e1c52919adfaef731e0dca";
+    let API_KEY="xxx";
     let getWeatherInfo =async () => {
-       let response= await fetch(`${API_URL}?q=${city}&appid=${API_KEY}&units=metric`);
+      try{
+         let response= await fetch(`${API_URL}?q=${city}&appid=${API_KEY}&units=metric`);
        let jsonRespose=await response.json();
         console.log(jsonRespose);
         let result={
@@ -26,19 +28,29 @@ export default function SearchBox(){
             weather:jsonRespose.weather[0].discription,
         }
         console.log(result);
+        return result;
+      }catch(err){
+       throw err;
+      }
     }
 
     
 
-    let handelchange =(event)=>{
+    let handelchange =  (event)=>{
        setCity(event.target.value);     
     }
 
-    let handelsubmit =(event)=>{
+    let handelsubmit =async (event)=>{
+        try{
         event.preventDefault();
         console.log(city);
         setCity("");
-        getWeatherInfo();
+       let newInfo = await getWeatherInfo();
+       updateInfo(newInfo);
+        }catch(error){
+             setError(true);
+        }
+       
     }
     return(
         <><div className="SearchBox">
@@ -48,6 +60,7 @@ export default function SearchBox(){
                  <br />
                  <br />
                  <Button variant="contained" type='submit'> Search</Button>
+                 {error && <p style={{ color: "red" }}>⚠️ No such place exists in the API!</p>}
 
             </form>
         </div>

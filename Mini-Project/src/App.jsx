@@ -1,8 +1,7 @@
 
 import './App.css'
-import Button from '@mui/material/Button';
-import SearchBox from './SearchBox';
-import InfoBox from './InfoBox';
+import WeatherApp from './WeatherApp'
+
 
 function App() {
  
@@ -11,8 +10,7 @@ function App() {
     <>
     {/* <h1>Material UI Demo</h1>
     <Button variant="contained">Click ME!</Button> */}
-    <SearchBox/>
-    <InfoBox/>
+    <WeatherApp/>
     </>
   )
 }

@@ -1,8 +1,9 @@
 .InfoBox{
    text-align: center;
+   padding-top: 2rem;
 
 }
-.carContainer{
+.cardContainer{
     display: flex;
     justify-content: center;
 }
